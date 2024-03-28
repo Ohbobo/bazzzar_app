@@ -1,0 +1,19 @@
+---
+import { type IPosts } from "../../domain/entities/postEntities";
+import { InfiniteMovingCards } from "./randomSection";
+
+const { posts } = Astro.props as IPosts;
+---
+
+<section class="flex flex-col gap-12 w-full h-[70vh] mt-10">
+    <div class="flex gap-10 flex-col items-center">
+        <h1 class="text-4xl text-center w-1/2">Trouvez, partagez et copiez facilement des codes de parrainages de vos services</h1>
+        <div class="flex items-center gap-10">
+            <button class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Ajouter un code</button>
+            <a href="#post-collection">Voir tous les codes</a>
+        </div>
+    </div>
+    <div class="border border-black shadow-[4px_4px_0px_0px_rgba(0,0,0)] rounded-lg flex justify-center w-auto">
+        <InfiniteMovingCards items={posts} direction="right" speed="slow" client:load/>
+    </div>
+</section>

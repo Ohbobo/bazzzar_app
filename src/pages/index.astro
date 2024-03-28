@@ -1,0 +1,26 @@
+---
+import MainLayout from "../layouts/mainLayout.astro";
+import NavBar from '../post/presentation/components/navbar.astro'
+import Header from "../post/presentation/components/header.astro";
+
+const allPostsReq = await fetch('http://localhost:4321/api/contentManagement/controller/getAllPosts');
+const allPostsResponse = await allPostsReq.json();
+---
+
+<MainLayout 
+	title=""
+	description=""
+>
+	<NavBar/>
+	<main class="w-[1500px] mx-auto">
+		<Header posts={allPostsResponse}/>
+		
+      <form method="POST" action="/api/contentManagement/controller/createPost" style="display: grid">
+		  
+			<label for="content">Content</label>
+			<textarea id="content" name="content"></textarea>
+		  
+			<button type="submit">Submit</button>
+		  </form>
+	</main>
+</MainLayout>

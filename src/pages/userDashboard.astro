@@ -1,0 +1,23 @@
+---
+import MainLayout from '../layouts/mainLayout.astro'
+import { getSession } from 'auth-astro/server';
+import { SignOut } from "auth-astro/components";
+
+const session = await getSession(Astro.request);
+
+if(!session) {
+    return Astro.redirect('/')
+}
+
+---
+
+<MainLayout title='' description=''>
+    <h1>Mon profil</h1>
+    <h2>Bienvenue {session?.user?.name}</h2>
+    <img 
+        src={session?.user?.image} 
+        alt="image de profil"
+        class="rounded-full"
+    >
+    <SignOut>Se deconnecter</SignOut>
+</MainLayout>

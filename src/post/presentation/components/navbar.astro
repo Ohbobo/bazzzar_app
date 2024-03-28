@@ -1,0 +1,18 @@
+---
+import { SignIn } from "auth-astro/components";
+import { getSession } from 'auth-astro/server';
+
+const session = await getSession(Astro.request);
+---
+
+<header class="max-w-[1500px] mx-auto mt-10">
+    <nav class="flex justify-between items-center">
+        <h2>Bazzzar</h2>
+
+        {session ? (
+            <a href="/userDashboard" class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Mon profil</a>
+        ) : (
+        <SignIn provider="google" class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Se connecter</SignIn>
+        )}
+    </nav>
+</header>
