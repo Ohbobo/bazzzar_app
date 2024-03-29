@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/mainLayout.astro'
 import { getSession } from 'auth-astro/server';
 import { SignOut } from "auth-astro/components";
+import PostOwnerSection from '../post/presentation/userDashboard/postOwnerSection.astro';
 
 const session = await getSession(Astro.request);
 
@@ -9,15 +10,32 @@ if(!session) {
     return Astro.redirect('/')
 }
 
+const allPostsReq = await fetch('http://localhost:4321/api/contentManagement/controller/getAllPosts');
+const allPostsResponse = await allPostsReq.json();
+
+const userPosts = await allPostsResponse.filter((posts: { userId: string | null | undefined; }) => posts.userId === session.user?.email);
+
+//ajouter balise Image Astro
 ---
 
-<MainLayout title='' description=''>
-    <h1>Mon profil</h1>
-    <h2>Bienvenue {session?.user?.name}</h2>
-    <img 
-        src={session?.user?.image} 
-        alt="image de profil"
-        class="rounded-full"
-    >
-    <SignOut>Se deconnecter</SignOut>
+<MainLayout title='' description='' className='flex justify-center items-center w-screen h-screen'>
+    <main class="border w-[1300px] mx-auto p-10 rounded-lg shadow-lg flex flex-col gap-10">
+        <div class="flex justify-between items-center">
+            <h1 class="text-xl">Bienvenue <span>{session?.user?.name}</span>👋</h1>
+            <div class="flex items-center gap-5">
+                <a href="/" class="border px-5 py-1.5 rounded-lg">Revenir page acceuil</a>
+                <img 
+                    src={session?.user?.image} 
+                    alt="profil"
+                    class="rounded-full w-8 h-8"
+                >
+            </div>
+        </div>
+        <div class="flex justify-end">
+            <button class="bg-black text-white px-5 py-2 rounded-lg hover:shadow-lg">Ajouter un code</button>
+        </div>
+        <PostOwnerSection posts={userPosts}/>
+    
+        <SignOut>Se deconnecter</SignOut>
+    </main>
 </MainLayout>

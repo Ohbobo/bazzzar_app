@@ -2,9 +2,13 @@
 import MainLayout from "../layouts/mainLayout.astro";
 import NavBar from '../post/presentation/components/navbar.astro'
 import Header from "../post/presentation/components/header.astro";
+import { AllPostsContent } from "../post/presentation/components/allPostsContent";
+import { db, Categories } from "astro:db";
 
 const allPostsReq = await fetch('http://localhost:4321/api/contentManagement/controller/getAllPosts');
 const allPostsResponse = await allPostsReq.json();
+
+const categories = await db.select().from(Categories);
 ---
 
 <MainLayout 
@@ -15,12 +19,13 @@ const allPostsResponse = await allPostsReq.json();
 	<main class="w-[1500px] mx-auto">
 		<Header posts={allPostsResponse}/>
 		
-      <form method="POST" action="/api/contentManagement/controller/createPost" style="display: grid">
-		  
-			<label for="content">Content</label>
-			<textarea id="content" name="content"></textarea>
-		  
-			<button type="submit">Submit</button>
+		<form method="POST" action="/api/contentManagement/controller/createPost" style="display: grid">
+			
+			  <label for="content">Content</label>
+			  <textarea id="content" name="content"></textarea>
+			
+			  <button type="submit">Submit</button>
 		  </form>
+		<AllPostsContent categorieArr={categories} posts={allPostsResponse} client:load/>
 	</main>
 </MainLayout>

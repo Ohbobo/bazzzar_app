@@ -1,0 +1,18 @@
+---
+import { type IPosts } from "../../domain/entities/postEntities";
+
+const { posts } = Astro.props as IPosts
+---
+
+<div class="border rounded-lg h-[50vh] p-5">
+    {posts.length !== 0 ? (
+        posts.map(post => (
+            <p>{post.content}</p>
+        ))
+    ) : (
+        <div class="w-full h-full flex flex-col gap-3 items-center justify-center">
+            <p>Pas de posts pour le moment</p>
+            <button class="bg-black text-white px-5 py-2 rounded-lg hover:shadow-lg">Ajouter un code de parrainage</button>
+        </div>
+    )}
+</div>

@@ -7,7 +7,7 @@ export default async function seed() {
 			id: "ffeefefefe",
 			content: "519eazadfff",
 			isVisible: true,
-			category: "Bourse",
+			category: "Boursorama",
 			userId: "agentheo0@gmail.com",
 			userImg: "dzdzd",
 			userName: "ceezcec",
@@ -16,7 +16,7 @@ export default async function seed() {
 			id: "ffeefefefe",
 			content: "Bo",
 			isVisible: true,
-			category: "Bourse",
+			category: "Boursorama",
 			userId: "agentheo0@gmail.com",
 			userImg: "dzdzd",
 			userName: "ceezcec",
@@ -25,11 +25,26 @@ export default async function seed() {
 			id: "ffeefefefe",
 			content: "Bobob",
 			isVisible: true,
-			category: "Bourse",
+			category: "HelloBank",
 			userId: "agentheo0@gmail.com",
 			userImg: "dzdzd",
 			userName: "ceezcec",
 		},
 	]
 	)
+
+	await db.insert(Categories).values([
+		{
+			name: "Tous",
+			id: "0"
+		},
+		{
+			name: "Boursorama",
+			id: "123"
+		},
+		{
+			name: "HelloBank",
+			id: "124"
+		}
+	])
 }

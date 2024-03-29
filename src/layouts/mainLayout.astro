@@ -2,9 +2,10 @@
 type Props = {
     title: string;
     description: string;
+	className?: string;
 }
 
-const { title, description } = Astro.props as Props;
+const { title, description, className } = Astro.props as Props;
 ---
 
 <html lang="fr">
@@ -16,7 +17,7 @@ const { title, description } = Astro.props as Props;
 		<meta name="description" content={description} />
 		<title>{title}</title>
 	</head>
-	<body>
+	<body class={className}>
 		<slot />
 	</body>
 </html>
