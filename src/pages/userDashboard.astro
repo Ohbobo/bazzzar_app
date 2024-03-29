@@ -15,7 +15,11 @@ const allPostsResponse = await allPostsReq.json();
 
 const userPosts = await allPostsResponse.filter((posts: { userId: string | null | undefined; }) => posts.userId === session.user?.email);
 
-//ajouter balise Image Astro
+// ajouter balise Image Astro
+// permettre afficher image ou non
+// rendre visible un post ou non
+// supprimer compte
+// 
 ---
 
 <MainLayout title='' description='' className='flex justify-center items-center w-screen h-screen'>
