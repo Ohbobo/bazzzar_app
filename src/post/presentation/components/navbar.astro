@@ -1,7 +1,5 @@
 ---
-import { SignIn } from "auth-astro/components";
 import { getSession } from 'auth-astro/server';
-
 const session = await getSession(Astro.request);
 ---
 
@@ -12,7 +10,7 @@ const session = await getSession(Astro.request);
         {session ? (
             <a href="/userDashboard" class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Mon profil</a>
         ) : (
-        <SignIn provider="google" class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Se connecter</SignIn>
+        <a href="/login" class="px-4 py-2 rounded-md border border-black bg-white text-neutarl-700 text-sm hover:shadow-[4px_4px_0px_0px_rgba(0,0,0)] transition duration-200">Se connecter</a>
         )}
     </nav>
 </header>

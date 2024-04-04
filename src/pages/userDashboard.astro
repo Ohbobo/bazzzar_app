@@ -3,6 +3,7 @@ import MainLayout from '../layouts/mainLayout.astro'
 import { getSession } from 'auth-astro/server';
 import { SignOut } from "auth-astro/components";
 import PostOwnerSection from '../post/presentation/userDashboard/postOwnerSection.astro';
+import AddPost from '../post/presentation/userDashboard/addPost.astro';
 
 const session = await getSession(Astro.request);
 
@@ -35,9 +36,9 @@ const userPosts = await allPostsResponse.filter((posts: { userId: string | null 
                 >
             </div>
         </div>
-        <div class="flex justify-end">
-            <button class="bg-black text-white px-5 py-2 rounded-lg hover:shadow-lg">Ajouter un code</button>
-        </div>
+
+        <AddPost />
+
         <PostOwnerSection posts={userPosts}/>
     
         <SignOut>Se deconnecter</SignOut>

@@ -18,14 +18,10 @@ const categories = await db.select().from(Categories);
 	<NavBar/>
 	<main class="w-[1500px] mx-auto">
 		<Header posts={allPostsResponse}/>
-		
-		<form method="POST" action="/api/contentManagement/controller/createPost" style="display: grid">
-			
-			  <label for="content">Content</label>
-			  <textarea id="content" name="content"></textarea>
-			
-			  <button type="submit">Submit</button>
-		  </form>
-		<AllPostsContent categorieArr={categories} posts={allPostsResponse} client:load/>
+		<AllPostsContent 
+			categorieArr={categories} 
+			posts={allPostsResponse} 
+			client:load
+		/>
 	</main>
 </MainLayout>

@@ -28,17 +28,18 @@ const getUserIdFromSession = async (req: Request) => {
   return userData;
 }
 
-export const POST: APIRoute = async({ request, redirect }) => {
-    const formData = await request.formData();
-    const content = formData.get('content');
+export const POST: APIRoute = async({ request }) => {
+    
+    let data: IPost = await request.json();
+     const { content } = data
+
     try {
-        if(typeof content === 'string' && content !== "" ) {    
             const userId = await getUserIdFromSession(request)
             if(!userId) {
                 return new Response("Vous devez être connecté pour ajouter votre code", { status: 401 });
             }
 
-            const postData: IPost = {
+            data = {
                 content: content,
                 userId: userId.email || "",
                 userImg: userId.image || "",
@@ -48,13 +49,26 @@ export const POST: APIRoute = async({ request, redirect }) => {
                 isVisible: true
             }
 
-            await service.createNewPost(postData);
-        }
+            const res = await service.createNewPost(data);
+            if(res) {
+                return new Response(
+                    JSON.stringify({
+                        message: "Post ajouté avec succés",
+                        data: res,
+                        success: true,
+                    }),
+                    {
+                        status: 200
+                    }
+                )
+            } else {
+                throw new Error('There was a problem with the db response.');
+            }
+
     } catch (error) {
         return new Response(
             "Création impossible" + error, 
             { status: 500 },
         )
     }
-    return redirect("/")
 }
