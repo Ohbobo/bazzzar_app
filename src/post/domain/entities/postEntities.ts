@@ -11,3 +11,12 @@ export interface IPost {
 export interface IPosts {
     posts: IPost[]
 }
+
+export interface ICategory {
+    id: string,
+    name: string,
+}
+
+export interface ICategories {
+    category: ICategory[], 
+}

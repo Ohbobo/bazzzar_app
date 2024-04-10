@@ -9,7 +9,6 @@ export class CreatePost {
         const newPost: IPost = {
             ...dto
         }
-        const createNewPost = await this.repository.createPost(newPost);
-        return createNewPost;
+        return await this.repository.createPost(newPost);
     }
 }

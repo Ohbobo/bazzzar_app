@@ -4,30 +4,30 @@ import { db, Post, Categories } from 'astro:db';
 export default async function seed() {
 	await db.insert(Post).values([
 		{
-			id: "ffeefefefe",
+			id: "1",
 			content: "519eazadfff",
 			isVisible: true,
 			category: "Boursorama",
 			userId: "agentheo0@gmail.com",
-			userImg: "dzdzd",
+			userImg: "",
 			userName: "ceezcec",
 		},
 		{
-			id: "ffeefefefe",
+			id: "2",
 			content: "Bo",
 			isVisible: true,
 			category: "Boursorama",
 			userId: "agentheo0@gmail.com",
-			userImg: "dzdzd",
+			userImg: "",
 			userName: "ceezcec",
 		},
 		{
-			id: "ffeefefefe",
+			id: "3",
 			content: "Bobob",
 			isVisible: true,
 			category: "HelloBank",
 			userId: "agentheo0@gmail.com",
-			userImg: "dzdzd",
+			userImg: "",
 			userName: "ceezcec",
 		},
 	]

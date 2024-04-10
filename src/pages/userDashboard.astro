@@ -2,8 +2,10 @@
 import MainLayout from '../layouts/mainLayout.astro'
 import { getSession } from 'auth-astro/server';
 import { SignOut } from "auth-astro/components";
-import PostOwnerSection from '../post/presentation/userDashboard/postOwnerSection.astro';
 import AddPost from '../post/presentation/userDashboard/addPost.astro';
+import { UserPostsSection } from '../post/presentation/userDashboard/userPostsSection';
+import { db } from 'astro:db';
+import { Categories } from 'astro:db';
 
 const session = await getSession(Astro.request);
 
@@ -15,14 +17,8 @@ const allPostsReq = await fetch('http://localhost:4321/api/contentManagement/con
 const allPostsResponse = await allPostsReq.json();
 
 const userPosts = await allPostsResponse.filter((posts: { userId: string | null | undefined; }) => posts.userId === session.user?.email);
-
-// ajouter balise Image Astro
-// permettre afficher image ou non
-// rendre visible un post ou non
-// supprimer compte
-// 
+const categories = await db.select().from(Categories);
 ---
-
 <MainLayout title='' description='' className='flex justify-center items-center w-screen h-screen'>
     <main class="border w-[1300px] mx-auto p-10 rounded-lg shadow-lg flex flex-col gap-10">
         <div class="flex justify-between items-center">
@@ -37,9 +33,8 @@ const userPosts = await allPostsResponse.filter((posts: { userId: string | null 
             </div>
         </div>
 
-        <AddPost />
-
-        <PostOwnerSection posts={userPosts}/>
+        <AddPost category={categories}/>
+        <UserPostsSection posts={userPosts} client:load/>
     
         <SignOut>Se deconnecter</SignOut>
     </main>

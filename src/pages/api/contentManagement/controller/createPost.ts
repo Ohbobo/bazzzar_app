@@ -3,10 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getSession } from 'auth-astro/server';
 import { DbRepository } from '../../../../post/adapter/db/dbRepository';
 import { type IPost } from '../../../../post/domain/entities/postEntities';
-import { PostDto
- } from '../../../../post/domain/dto/post.dto';
 import { CreatePost } from '../../../../post/domain/useCases/createPost';
-import { getUserDataFromSession } from '../../../../post/middleware/getUserData/getUserData';
 
 const service = new CreatePost(new DbRepository());
 
@@ -16,8 +13,14 @@ type UserData = {
     image?: string,
 }
 
-const getUserIdFromSession = async (req: Request) => {
+const checkUserAuth = async(req: Request) => {
+    
+}
+
+const getUserIdFromSession = async (req: Request) => {  
   const userSession = await getSession(req);
+  const cookieHeader = req?.headers?.get('cookie');
+
   const userData: UserData = {
     email: userSession?.user?.email || "",
   }
@@ -31,8 +34,8 @@ const getUserIdFromSession = async (req: Request) => {
 export const POST: APIRoute = async({ request }) => {
     
     let data: IPost = await request.json();
-     const { content } = data
-
+    const { content, category } = data;
+    console.log(request);
     try {
             const userId = await getUserIdFromSession(request)
             if(!userId) {
@@ -44,13 +47,14 @@ export const POST: APIRoute = async({ request }) => {
                 userId: userId.email || "",
                 userImg: userId.image || "",
                 userName: userId.name || "",
-                category: "Boursorama",
+                category: category,
                 id: uuidv4(),
                 isVisible: true
             }
 
             const res = await service.createNewPost(data);
             if(res) {
+                console.log(res)
                 return new Response(
                     JSON.stringify({
                         message: "Post ajouté avec succés",

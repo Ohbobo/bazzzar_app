@@ -1,5 +1,9 @@
 ---
+import { Categories } from "astro:db";
 import Button from "../../../ui/button.astro";
+import { type ICategories } from "../../domain/entities/postEntities";
+
+const { category } = Astro.props as ICategories;
 ---
 <div class="w-full h-full absolute top-0 left-0 hidden" id="modal">
 
@@ -22,6 +26,12 @@ import Button from "../../../ui/button.astro";
                 </svg>
             </div>
             <form id="add-form" class="flex flex-col w-full gap-5 mt-10">
+                <label for="categories" class="sr-only">Categories</label>
+                <select class="border pl-2 rounded-md py-2" name="categories" id="category-input">
+                    {category.filter(cat => cat.name !== "Tous").map(cat => (
+                        <option id={cat.id} value={cat.name}>{cat.name}</option>
+                    ))}
+                </select>
                 <label for="code" class="sr-only">Code</label>
                 <input 
                     class="border pl-2 rounded-md py-2" 
@@ -67,6 +77,8 @@ import Button from "../../../ui/button.astro";
             const contentInput: HTMLInputElement | null= document.querySelector('#content-input');
             const content = contentInput ? contentInput.value : ''
 
+            const categoryInput: HTMLInputElement | null= document.querySelector('#category-input');
+            const category = categoryInput ? categoryInput.value : ''
             console.log(content)
             if(typeof content === "string" && content !== "") {
                 const req = await fetch('api/contentManagement/controller/createPost', {
@@ -75,7 +87,7 @@ import Button from "../../../ui/button.astro";
                         Accept: 'application/json',
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({ content })
+                    body: JSON.stringify({ content, category })
                 });
                 
                 const { success, data, message } = await req.json();
@@ -83,7 +95,7 @@ import Button from "../../../ui/button.astro";
                 if(success) {
                     addForm.reset();
                     handleToogleModal(modal);
-                    location.reload();
+                    alert(message)
                 } else {
                     throw new Error(message)
                 }
