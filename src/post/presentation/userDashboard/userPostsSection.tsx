@@ -26,7 +26,7 @@ export const UserPostsSection = ({ posts }: {posts: IPost[]}) => {
     return (
     <div className='border flex justify-around gap-3 rounded-lg h-[50vh] p-5'>
         {post.length !== 0 ? (
-        post.map(post => (
+        post.filter(p => p.isVisible === true).map(post => (
             <article key={post.content} className='border w-1/4 h-fit rounded-md p-5 flex flex-col gap-6'>
                 <div className='flex justify-between items-center'>
                     <span className="inline-flex items-center justify-center rounded-full bg-purple-100 px-2.5 py-0.5 text-purple-700">
@@ -38,9 +38,10 @@ export const UserPostsSection = ({ posts }: {posts: IPost[]}) => {
                         <span className='block w-5 h-5 bg-black rounded-full'></span>
                     )}
                 </div>
-
+                
                 <div className='text-lg text-center'>
                     <span>{post.content}</span>
+                    <span>{post.isVisible}</span>
                 </div>
 
                 <div className='flex justify-end'>

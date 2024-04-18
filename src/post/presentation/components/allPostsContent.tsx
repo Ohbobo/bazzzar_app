@@ -32,11 +32,12 @@ export const AllPostsContent = ( {
                 <span onClick={() => handleFilterContent(cat.name)} className='border p-5 rounded-lg cursor-pointer' key={cat.id}>{cat.name}</span>
             ))}
         </div>
-    
-        {
+        
+        <div className='flex justify-between'>
+            {
                 postState.length > 0 ? (
                     postState.map(post => (
-                        <div key={post.id} className='h-[80vh]'>
+                        <div key={post.id} className='border rounded-lg w-[300px] h-[300px]'>
                             <p>{post.content}</p>
                         </div>
                     ))
@@ -44,7 +45,7 @@ export const AllPostsContent = ( {
                     <p>Aucun post trouvé.</p>
                 )
             }
-
+        </div>
     </div>
   )
 }

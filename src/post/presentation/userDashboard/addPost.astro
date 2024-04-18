@@ -81,7 +81,7 @@ const { category } = Astro.props as ICategories;
             const category = categoryInput ? categoryInput.value : ''
             console.log(content)
             if(typeof content === "string" && content !== "") {
-                const req = await fetch('api/contentManagement/controller/createPost', {
+                const req = await fetch('api/contentManagement/controller/create', {
                     method: 'POST', 
                     headers: {
                         Accept: 'application/json',
